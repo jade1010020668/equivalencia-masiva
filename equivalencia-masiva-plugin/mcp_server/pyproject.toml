@@ -1,0 +1,15 @@
+[project]
+name = "equivalencia-masiva-mcp"
+version = "0.1.0"
+description = "MCP server que expone las funciones de core/ del proyecto Equivalencia Masiva como tools invocables desde Claude Code."
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=1.0",
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+    "sentence-transformers>=3.0",
+    "torch>=2.2",
+    "numpy>=1.26",
+    "unidecode>=1.3",
+    "reportlab>=4.0",
+]

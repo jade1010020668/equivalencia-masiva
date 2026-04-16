@@ -1,0 +1,20 @@
+[theme]
+# Paleta corporativa Despacho EARM — CNSC 2026
+primaryColor = "#FFEE58"              # corp-accent (amarillo EARM)
+backgroundColor = "#FAFAFA"           # body bg
+secondaryBackgroundColor = "#F0F0F0"  # corp-light
+textColor = "#424242"                 # corp-text
+font = "sans serif"
+
+[server]
+headless = true
+port = 8501
+enableXsrfProtection = true
+maxUploadSize = 200
+
+[browser]
+gatherUsageStats = false
+
+[runner]
+magicEnabled = true
+fastReruns = true

@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Local data / outputs (never commit real OPEC data)
+data/
+inputs/
+outputs/
+*.xlsx
+*.xls
+!plantilla_*.xlsx
+*_test_output.*
+_test_output.*
+
+# PDFs generados
+*.pdf
+!docs/*.pdf
+
+# Model cache (Hugging Face)
+.cache/
+huggingface/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Notes
+notes.md
+scratch.md
+
+# Claude Code — per-user local settings (rutas personales, permisos de tools)
+.claude/settings.local.json
+.claude/projects/

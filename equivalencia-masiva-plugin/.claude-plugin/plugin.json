@@ -1,0 +1,21 @@
+{
+  "name": "equivalencia-masiva",
+  "description": "Plugin del Despacho III EARM (CNSC) para análisis masivo de equivalencia de empleos a partir de listas de elegibles. Port fiel del notebook mismo_grado_.ipynb.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Despacho III — Comisionado Edwin Arturo Ruiz Moreno",
+    "email": "despacho.earm@cnsc.gov.co",
+    "url": "https://www.cnsc.gov.co"
+  },
+  "homepage": "https://huggingface.co/despacho-earm/equivalencia-masiva",
+  "repository": "https://github.com/despacho-earm/equivalencia-masiva",
+  "license": "Apache-2.0",
+  "keywords": [
+    "cnsc",
+    "despacho-earm",
+    "opec",
+    "listas-de-elegibles",
+    "equivalencia-empleos",
+    "sbert"
+  ]
+}

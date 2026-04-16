@@ -1,0 +1,17 @@
+{
+  "description": "Validación automática de Excels de OPEC del Despacho EARM",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/validate_xlsx.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

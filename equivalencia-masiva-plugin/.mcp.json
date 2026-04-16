@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "equivalencia-masiva-core": {
+      "command": "python",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp_server/server.py"],
+      "env": {
+        "PYTHONPATH": "${CLAUDE_PLUGIN_ROOT}/..",
+        "EQUIVALENCIA_MASIVA_LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
