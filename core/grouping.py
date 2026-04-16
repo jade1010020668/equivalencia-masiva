@@ -70,6 +70,9 @@ def _modalidad_clean(valor) -> str:
         return ""
     if isinstance(valor, float) and pd.isna(valor):
         return ""
+    # Numérico: convertir a float para que int(4) → "4.0" igual que float(4.0)
+    if isinstance(valor, (int, float)) and not isinstance(valor, bool):
+        return str(float(valor))
     return str(valor).strip().upper()
 
 
