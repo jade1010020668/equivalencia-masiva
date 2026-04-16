@@ -52,3 +52,8 @@ scratch.md
 # Claude Code — per-user local settings (rutas personales, permisos de tools)
 .claude/settings.local.json
 .claude/projects/
+
+# Pipeline output directory (singular, as written by run_pipeline.py)
+# NOTE: previously only `outputs/` (plural) was listed — this caused run_pipeline.py
+# outputs (which write to `output/`) to be accidentally tracked.
+output/
