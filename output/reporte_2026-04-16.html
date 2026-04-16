@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REPORTE SEMANAL LISTAS DE ELEGIBLES — 2026-04-16</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --yellow: #FFEE58;
+      --yellow-hover: #FDD835;
+      --light: #F0F0F0;
+      --text: #424242;
+      --dark: #2C2C2C;
+      --body-bg: #FAFAFA;
+      --emerald: #10B981;
+      --red: #EF4444;
+      --red-soft: rgba(239,68,68,0.12);
+      --glass: rgba(255,255,255,0.82);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--body-bg);
+      color: var(--text);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Orbes ambientales */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -120px; left: -120px;
+      width: 500px; height: 500px;
+      background: rgba(255,238,88,0.22);
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: rgba(16,185,129,0.15);
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 32px;
+      border: 1px solid rgba(255,238,88,0.35);
+    }
+
+    .logo-box {
+      width: 56px; height: 56px;
+      background: var(--yellow);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .header-text { flex: 1; }
+    .header-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+    .header-text .subtitle {
+      font-size: 0.85rem;
+      color: #757575;
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: rgba(239,68,68,0.12);
+      color: var(--red);
+      border: 1px solid rgba(239,68,68,0.3);
+      white-space: nowrap;
+    }
+    .status-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* ── Incident Banner ── */
+    .incident-banner {
+      background: rgba(239,68,68,0.08);
+      border: 1.5px solid rgba(239,68,68,0.3);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .incident-icon { font-size: 2rem; flex-shrink: 0; }
+    .incident-body h2 { font-size: 1rem; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+    .incident-body p { font-size: 0.88rem; color: var(--text); line-height: 1.6; }
+
+    /* ── Cards row ── */
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 14px;
+      padding: 20px 22px;
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .card-label { font-size: 0.78rem; color: #757575; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .card-value { font-size: 1.9rem; font-weight: 800; color: var(--dark); line-height: 1; }
+    .card-value.green { color: #16A34A; }
+    .card-value.red { color: var(--red); }
+    .card-value.yellow { color: #B45309; }
+    .card-sub { font-size: 0.78rem; color: #9E9E9E; margin-top: 5px; }
+
+    /* ── Section ── */
+    section { margin-bottom: 28px; }
+    section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--yellow);
+    }
+
+    /* ── Glass panel ── */
+    .glass-panel {
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 14px;
+      padding: 20px 24px;
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #757575;
+      border-bottom: 2px solid rgba(0,0,0,0.07);
+    }
+    tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); transition: background .15s; }
+    tbody tr:hover { background: rgba(255,238,88,0.08); }
+    tbody td { padding: 9px 12px; color: var(--text); }
+    .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+
+    /* ── Error list ── */
+    .error-block {
+      background: rgba(239,68,68,0.05);
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: 1px solid rgba(239,68,68,0.15);
+    }
+    .error-block p { font-size: 0.87rem; line-height: 1.7; color: var(--text); }
+    .error-block code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: var(--red);
+    }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 10px; }
+    .tl-item { display: flex; gap: 12px; align-items: flex-start; }
+    .tl-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; flex-shrink: 0; font-weight: 700;
+    }
+    .tl-icon.ok { background: rgba(22,163,74,0.15); color: #16A34A; }
+    .tl-icon.err { background: rgba(239,68,68,0.15); color: var(--red); }
+    .tl-icon.skip { background: rgba(158,158,158,0.15); color: #9E9E9E; }
+    .tl-text { flex: 1; }
+    .tl-text .tl-title { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .tl-text .tl-desc { font-size: 0.82rem; color: #757575; margin-top: 2px; line-height: 1.5; }
+
+    /* ── Recomendaciones ── */
+    .rec-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .rec-list li {
+      font-size: 0.88rem;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .rec-list li::before { content: '→'; position: absolute; left: 0; color: var(--yellow-hover); font-weight: 700; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding-top: 32px;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: #9E9E9E;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- 1. Header -->
+  <header>
+    <div class="logo-box">⚖️</div>
+    <div class="header-text">
+      <h1>Reporte semanal listas de elegibles</h1>
+      <div class="subtitle">Despacho EARM · CNSC · <span id="fecha">2026-04-16</span></div>
+    </div>
+    <div class="status-pill"><span class="dot"></span> Incidente</div>
+  </header>
+
+  <!-- Banner de incidente -->
+  <div class="incident-banner">
+    <div class="incident-icon">⚠️</div>
+    <div class="incident-body">
+      <h2>Ejecución interrumpida — sin pares para analizar</h2>
+      <p>La rutina semanal del <strong>2026-04-16</strong> descargó el insumo de Drive, consolidó
+      <strong>398 registros</strong> (365 vacantes + 33 listas), pero el pipeline terminó con
+      <strong>código de salida 1</strong>: ninguna de las 33 listas de elegibles comparte
+      <em>(entidad, Nivel Jerárquico, Grado)</em> con las 365 bases 4.0. No se generaron
+      archivos Excel de resultados ni PDF de reporte.</p>
+    </div>
+  </div>
+
+  <!-- 2. Cards de totales -->
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-label">Registros consolidados</div>
+      <div class="card-value">398</div>
+      <div class="card-sub">365 vacantes + 33 listas</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Grupos generados</div>
+      <div class="card-value yellow">365</div>
+      <div class="card-sub">100 % huérfanas</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pares analizados</div>
+      <div class="card-value red">0</div>
+      <div class="card-sub">Sin coincidencias</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Código de salida</div>
+      <div class="card-value red">1</div>
+      <div class="card-sub">Error de datos</div>
+    </div>
+  </div>
+
+  <!-- 3. Diagnóstico del incidente -->
+  <section>
+    <h2>Diagnóstico del incidente</h2>
+    <div class="glass-panel error-block">
+      <p>El pipeline devolvió: <code>No hay pares (base, lista) para analizar. Todas las bases 4.0 son huérfanas.</code></p>
+      <p style="margin-top:10px;">El criterio de emparejamiento exige que base y lista compartan exactamente
+      <code>nombre_entidad</code> + <code>Nivel Jerárquico</code> + <code>Grado</code>.
+      En el insumo <strong>"API LISTAS ELEGIBLES.xlsx"</strong> (modificado 2026-04-16T19:06:30Z)
+      solo existe una entidad compartida entre las dos hojas:</p>
+      <p style="margin-top:10px;"><code>ALCALDÍA DE ALVARADO - TOLIMA</code> —
+      base: Asistencial / Grado 3 · listas: Profesional (1,2) y Técnico (3,3,3) → nivel distinto, sin match.</p>
+      <p style="margin-top:10px;">Las 11 entidades con listas de elegibles
+      (<code>ALCALDIA DE ORTEGA TOLIMA</code>, <code>ALCALDÍA DE SUÁREZ - TOLIMA</code>,
+      <code>INDEPORTES TOLIMA</code>, <code>PERSONERIA …</code>,
+      <code>SECRETARÍA DE EDUCACIÓN DEPARTAMENTO DE TOLIMA</code>, etc.)
+      no tienen ninguna vacante 4.0 en la hoja <em>VACANTES DEFINITIVAS</em>.</p>
+    </div>
+  </section>
+
+  <!-- 4. Resumen de fases -->
+  <section>
+    <h2>Resumen de ejecución</h2>
+    <div class="glass-panel">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-icon ok">✓</div>
+          <div class="tl-text">
+            <div class="tl-title">Fase 1 — Obtener insumo de Drive</div>
+            <div class="tl-desc">Archivo "API LISTAS ELEGIBLES.xlsx" descargado · 453 313 bytes · modificado 2026-04-16 19:06 UTC</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-icon ok">✓</div>
+          <div class="tl-text">
+            <div class="tl-title">Fase 2 — Consolidar Excel</div>
+            <div class="tl-desc">398 filas · 15 columnas · modalidad preservada (4.0 numérico + "LISTAS " texto) · guardado en input/base_consolidada.xlsx</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-icon err">✗</div>
+          <div class="tl-text">
+            <div class="tl-title">Fase 3 — Ejecutar pipeline</div>
+            <div class="tl-desc">Código de salida 1 · 365 grupos generados · 0 pares · 365 bases huérfanas · sin archivos de salida</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-icon skip">–</div>
+          <div class="tl-text">
+            <div class="tl-title">Fase 4 — Análisis de resumen JSON</div>
+            <div class="tl-desc">Omitida (no se generó resumen_2026-04-16.json)</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-icon ok">✓</div>
+          <div class="tl-text">
+            <div class="tl-title">Fase 5 — Reporte HTML de incidente</div>
+            <div class="tl-desc">Este documento · diseño EARM · generado con información de diagnóstico detallada</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-icon ok">✓</div>
+          <div class="tl-text">
+            <div class="tl-title">Fase 6 — Correo</div>
+            <div class="tl-desc">Enviado a dmorales@cnsc.gov.co con copia a morales.1010020668@gmail.com · adjunto: reporte_2026-04-16.html</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Entidades en listas de elegibles -->
+  <section>
+    <h2>Entidades en listas de elegibles (sin vacante 4.0 equivalente)</h2>
+    <div class="glass-panel">
+      <table>
+        <thead>
+          <tr>
+            <th>Entidad</th>
+            <th>Registros</th>
+            <th>Niveles</th>
+            <th>Grados</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>ALCALDÍA DE ALVARADO - TOLIMA</td><td class="mono">6</td><td>Profesional, Técnico</td><td class="mono">1, 2, 3</td></tr>
+          <tr><td>ALCALDIA DE ORTEGA TOLIMA</td><td class="mono">6</td><td>Profesional, Técnico, Asistencial</td><td class="mono">0, 1, 2, 3, 4</td></tr>
+          <tr><td>ALCALDÍA DE SUÁREZ - TOLIMA</td><td class="mono">4</td><td>Asistencial, Profesional, Técnico</td><td class="mono">1, 2, 5</td></tr>
+          <tr><td>ALCALDÍA DE VILLARRICA - TOLIMA</td><td class="mono">1</td><td>Profesional</td><td class="mono">1</td></tr>
+          <tr><td>INDEPORTES TOLIMA</td><td class="mono">2</td><td>Asistencial, Profesional</td><td class="mono">5, 7</td></tr>
+          <tr><td>PERSONERIA MUNICIPAL ANZOATEGUI - TOLIMA</td><td class="mono">1</td><td>Asistencial</td><td class="mono">2</td></tr>
+          <tr><td>PERSONERIA MUNICIPAL COELLO TOLIMA</td><td class="mono">1</td><td>Asistencial</td><td class="mono">5</td></tr>
+          <tr><td>PERSONERIA MUNICIPAL DE FRESNO - TOLIMA</td><td class="mono">1</td><td>Asistencial</td><td class="mono">2</td></tr>
+          <tr><td>PERSONERIA MUNICIPAL DE PALOCABILDO TOLIMA</td><td class="mono">1</td><td>Asistencial</td><td class="mono">4</td></tr>
+          <tr><td>PERSONERIA MUNICIPAL PRADO- TOLIMA</td><td class="mono">1</td><td>Asistencial</td><td class="mono">3</td></tr>
+          <tr><td>SECRETARÍA DE EDUCACIÓN DEPARTAMENTO DE TOLIMA</td><td class="mono">9</td><td>Técnico, Asistencial</td><td class="mono">4, 5, 7, 8, 10</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. Recomendaciones -->
+  <section>
+    <h2>Observaciones y recomendaciones</h2>
+    <div class="glass-panel">
+      <ul class="rec-list">
+        <li>Verificar que la hoja <strong>VACANTES DEFINITIVAS</strong> incluya filas para las 11 entidades que sí tienen listas de elegibles (en especial SECRETARÍA DE EDUCACIÓN DEPARTAMENTO DE TOLIMA, con 9 registros).</li>
+        <li>Revisar si el nombre <strong>"SECRETARIA DE EDUCACIÓN DEL TOLIMA (PLANTA ADMINISTRATIVA)"</strong> (en VACANTES) corresponde a <strong>"SECRETARÍA DE EDUCACIÓN DEPARTAMENTO DE TOLIMA"</strong> (en LISTAS): posible discrepancia de nomenclatura.</li>
+        <li>Para ALCALDÍA DE ALVARADO - TOLIMA, la única entidad compartida, confirmar si la vacante Asistencial/Grado 3 debe emparejarse con las listas Técnico/Grado 3 (mismo grado, distinto nivel) — actualmente el criterio exige nivel idéntico.</li>
+        <li>Si la semana siguiente el insumo se actualiza con vacantes 4.0 para las entidades faltantes, la rutina completará el análisis sin intervención adicional.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    Equivalencia Masiva v1.0 — Edwin Arturo Ruiz Moreno — Comisionado CNSC 2026
+  </footer>
+
+</div>
+</body>
+</html>
