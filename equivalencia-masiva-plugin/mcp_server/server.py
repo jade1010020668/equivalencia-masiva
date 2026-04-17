@@ -242,12 +242,20 @@ def analizar_par(
     if faltantes:
         return {"ok": False, "error": "Faltan columnas", "faltantes": faltantes}
 
-    # Buscar las filas
-    df["No. OPEC"] = df["No. OPEC"].astype(str)
-    base_rows = df[(df["No. OPEC"] == str(opec_base))
-                   & (df["modalidad"].astype(str).str.strip() == "4.0")]
-    lista_rows = df[(df["No. OPEC"] == str(opec_lista))
-                    & (df["modalidad"].astype(str).str.strip().str.upper() == "LISTAS")]
+    # Normalizar OPEC (puede venir como float 428030.0 → "428030")
+    def _opec_str(v) -> str:
+        try:
+            return str(int(float(str(v))))
+        except (ValueError, TypeError):
+            return str(v).strip()
+
+    df["__opec_norm__"] = df["No. OPEC"].apply(_opec_str)
+    df["__mod_clean__"] = df["modalidad"].apply(grouping_mod._modalidad_clean)
+
+    base_rows = df[(df["__opec_norm__"] == _opec_str(opec_base))
+                   & (df["__mod_clean__"] == "4.0")]
+    lista_rows = df[(df["__opec_norm__"] == _opec_str(opec_lista))
+                    & (df["__mod_clean__"] == "LISTAS")]
 
     if base_rows.empty:
         return {"ok": False, "error": f"OPEC base '{opec_base}' con modalidad 4.0 no encontrada"}

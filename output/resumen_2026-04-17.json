@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "exit_code": 0,
+  "mensaje": "Sin pares para analizar. Todas las bases son huérfanas.",
+  "fecha": "2026-04-17",
+  "archivo_entrada": "/home/user/equivalencia-masiva/input/base_consolidada.xlsx",
+  "tiempo_segundos": 0,
+  "total_pares_analizados": 0,
+  "total_grupos": 365,
+  "bases_huerfanas": 365,
+  "errores_durante_analisis": 0,
+  "totales": {
+    "EQUIVALENTE": 0,
+    "NO_EQUIVALENTE": 0,
+    "pct_equivalentes": 0.0,
+    "pct_no_equivalentes": 0.0
+  },
+  "top_entidades": [],
+  "distribucion_nivel": [],
+  "top_denominaciones": [],
+  "alertas": {
+    "bases_huerfanas": 365
+  },
+  "archivos_salida": {
+    "xlsx": null,
+    "pdf": null,
+    "json": "/home/user/equivalencia-masiva/output/resumen_2026-04-17.json"
+  },
+  "errores_detalle": []
+}

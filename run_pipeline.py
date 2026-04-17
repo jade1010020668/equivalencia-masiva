@@ -15,8 +15,8 @@ Produce:
     ./output/resumen_2026-04-16.json      (JSON con totales — para la FASE 4 de la rutina)
 
 Códigos de salida:
-    0 — éxito total
-    1 — archivo de entrada no encontrado o inválido
+    0 — éxito total (incluso si todas las bases son huérfanas y total_pares=0)
+    1 — archivo de entrada no encontrado o ilegible
     2 — faltan columnas requeridas
     3 — error de dependencias (SBERT, openpyxl, etc.)
     4 — error imprevisto durante el análisis (stack trace al stderr)
@@ -149,11 +149,42 @@ def main() -> None:
     )
 
     if total_pares == 0:
-        _exit(
-            1,
-            "No hay pares (base, lista) para analizar. Todas las bases 4.0 son huérfanas.",
-            {"grupos": len(grupos), "huerfanos": huerfanos},
-        )
+        # Sin pares no hay nada que modelar, pero producimos JSON con ceros
+        # para que la rutina semanal pueda continuar con FASES 4-6.
+        log.warning("Todas las bases 4.0 son huérfanas — sin pares para analizar.")
+        resumen_vacio = {
+            "ok": True,
+            "exit_code": 0,
+            "mensaje": "Sin pares para analizar. Todas las bases son huérfanas.",
+            "fecha": args.date,
+            "archivo_entrada": str(input_path),
+            "tiempo_segundos": 0,
+            "total_pares_analizados": 0,
+            "total_grupos": len(grupos),
+            "bases_huerfanas": huerfanos,
+            "errores_durante_analisis": 0,
+            "totales": {
+                "EQUIVALENTE": 0,
+                "NO_EQUIVALENTE": 0,
+                "pct_equivalentes": 0.0,
+                "pct_no_equivalentes": 0.0,
+            },
+            "top_entidades": [],
+            "distribucion_nivel": [],
+            "top_denominaciones": [],
+            "alertas": {"bases_huerfanas": huerfanos},
+            "archivos_salida": {"xlsx": None, "pdf": None, "json": str(path_json)},
+            "errores_detalle": [],
+        }
+        try:
+            path_json.write_text(
+                json.dumps(resumen_vacio, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            log.info("JSON de ceros escrito: %s", path_json)
+        except Exception as exc:
+            log.warning("No pude guardar JSON de ceros: %s", exc)
+        print(json.dumps(resumen_vacio, ensure_ascii=False, default=str))
+        sys.exit(0)
 
     # --- 5. Cargar modelo SBERT (primera vez tarda 1-2 min) ---
     try:

@@ -427,8 +427,51 @@ def comparar_salarios(
 # =========================================================================
 
 
+class _TfidfOfflineModel:
+    """
+    Fallback offline cuando SBERT no puede descargarse (sin internet ni cache).
+
+    Usa HashingVectorizer con char n-grams (2-4) normalizados en L2, por lo que
+    el producto punto de dos vectores es igual al coseno. No requiere fitting ni
+    descarga — funciona inmediatamente con cualquier texto.
+
+    ADVERTENCIA: los scores difieren de los del notebook (STS RoBERTa). Úsalo
+    sólo cuando no haya conectividad ni cache del modelo SBERT.
+    """
+
+    _log_once: bool = False
+
+    def __init__(self) -> None:
+        from sklearn.feature_extraction.text import HashingVectorizer
+        self._vec = HashingVectorizer(
+            analyzer="char_wb",
+            ngram_range=(2, 4),
+            n_features=8192,
+            norm="l2",
+            alternate_sign=False,
+        )
+        if not _TfidfOfflineModel._log_once:
+            logging.warning(
+                "SBERT no disponible (sin internet/cache). "
+                "Usando TF-IDF char n-gram como fallback offline. "
+                "Los scores son aproximados y NO idénticos al notebook."
+            )
+            _TfidfOfflineModel._log_once = True
+
+    def encode(
+        self,
+        texts: list[str],
+        convert_to_numpy: bool = True,
+        show_progress_bar: bool = False,
+        batch_size: int = 32,
+    ):
+        import numpy as np
+        return self._vec.transform(texts).toarray().astype(np.float32)
+
+
 def cargar_modelo(nombre: str = SBERT_MODEL_NAME):
-    """Carga el modelo SBERT en CPU/GPU. Cacheado por proceso."""
+    """Carga el modelo SBERT en CPU/GPU. Cacheado por proceso.
+    Si el modelo no está disponible offline, retorna el fallback TF-IDF."""
     return _cargar_modelo_cache(nombre)
 
 
@@ -439,7 +482,14 @@ def _cargar_modelo_cache(nombre: str):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     logging.info("Cargando SBERT '%s' en %s…", nombre, device.upper())
-    return SentenceTransformer(nombre, device=device)
+    try:
+        return SentenceTransformer(nombre, device=device)
+    except Exception as exc:
+        logging.warning(
+            "No se pudo cargar SBERT '%s': %s — activando fallback TF-IDF offline.",
+            nombre, exc,
+        )
+        return _TfidfOfflineModel()
 
 
 def _cos_sim_matriz(emb_1: np.ndarray, emb_2: np.ndarray) -> np.ndarray:
