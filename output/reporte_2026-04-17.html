@@ -1,178 +1,350 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>REPORTE SEMANAL LISTAS DE ELEGIBLES — 2026-04-17</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reporte Semanal Listas de Elegibles — 2026-04-17</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --yellow:#FFEE58;--yellow-hover:#FDD835;--light:#F0F0F0;
-  --text:#424242;--dark:#2C2C2C;--body:#FAFAFA;
-  --emerald:#10B981;--red:#EF4444;--amber:#F59E0B;
-  --glass:rgba(255,255,255,0.82);
-}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--body);color:var(--text);min-height:100vh;position:relative;overflow-x:hidden}
-body::before{content:'';position:fixed;top:-120px;left:-120px;width:500px;height:500px;background:rgba(255,238,88,0.22);border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-120px;right:-120px;width:500px;height:500px;background:rgba(16,185,129,0.15);border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:32px 24px 64px}
-header{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:16px;padding:28px 32px;display:flex;align-items:center;gap:20px;margin-bottom:28px;border:1px solid rgba(255,238,88,0.35)}
-.logo{width:56px;height:56px;background:var(--yellow);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
-.header-text h1{font-size:1.22rem;font-weight:800;color:var(--dark);text-transform:uppercase;letter-spacing:.04em;line-height:1.2}
-.header-text .sub{font-size:.84rem;color:#757575;margin-top:4px;font-family:'JetBrains Mono',monospace}
-.status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-size:.78rem;font-weight:600;background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.3);white-space:nowrap;margin-left:auto}
-.dot{width:8px;height:8px;border-radius:50%;background:#F59E0B;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:28px}
-.card{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:14px;padding:20px 22px;border:1px solid rgba(255,255,255,.7);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.card-label{font-size:.76rem;color:#757575;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-.card-value{font-size:1.9rem;font-weight:800;color:var(--dark);line-height:1}
-.card-value.green{color:#16A34A}.card-value.red{color:var(--red)}.card-value.amber{color:var(--amber)}
-.card-sub{font-size:.76rem;color:#9E9E9E;margin-top:5px}
-.glass-panel{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:14px;padding:20px 24px;border:1px solid rgba(255,255,255,.7);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-section{margin-bottom:28px}
-section h2{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:14px;padding-left:10px;border-left:3px solid var(--yellow)}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-thead th{text-align:left;padding:10px 12px;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#757575;border-bottom:2px solid rgba(0,0,0,.07)}
-tbody tr{border-bottom:1px solid rgba(0,0,0,.05);transition:background .15s}
-tbody tr:hover{background:rgba(255,238,88,.08)}
-tbody td{padding:9px 12px;color:var(--text)}
-.mono{font-family:'JetBrains Mono',monospace;font-size:.82rem}
-.chart-wrap{max-width:320px;margin:0 auto;padding:8px 0}
-.alert-box{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:28px;font-size:.88rem;line-height:1.6}
-.alert-icon{font-size:1.6rem;flex-shrink:0}
-footer{text-align:center;padding-top:32px;font-size:.72rem;letter-spacing:.15em;color:#9E9E9E;text-transform:uppercase}
+  :root {
+    --accent: #FFEE58;
+    --accent-hover: #FDD835;
+    --light: #F0F0F0;
+    --text: #424242;
+    --dark: #2C2C2C;
+    --body: #FAFAFA;
+    --emerald: #10B981;
+    --rose: #E11D48;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background: var(--body);
+    color: var(--text);
+    line-height: 1.55;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+  body::before {
+    top: -120px; left: -120px;
+    width: 520px; height: 520px;
+    background: rgba(255, 238, 88, 0.22);
+  }
+  body::after {
+    bottom: -140px; right: -140px;
+    width: 560px; height: 560px;
+    background: rgba(16, 185, 129, 0.15);
+  }
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  }
+  .logo-box {
+    width: 56px; height: 56px;
+    background: var(--accent);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 6px 18px rgba(253, 216, 53, 0.45);
+    flex-shrink: 0;
+  }
+  .header-text { flex: 1; min-width: 0; }
+  .app-name {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--dark);
+    text-transform: uppercase;
+    margin: 0 0 4px 0;
+  }
+  .app-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--text);
+    margin: 0;
+  }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    background: rgba(16,185,129,0.14);
+    color: #047857;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid rgba(16,185,129,0.25);
+  }
+  .status-pill .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--emerald);
+    box-shadow: 0 0 0 4px rgba(16,185,129,0.2);
+  }
+
+  .section { margin-top: 32px; }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 0 0 14px 0;
+    letter-spacing: 0.01em;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+  }
+  .card .label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.7;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+  }
+  .card .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+    line-height: 1.1;
+  }
+  .card.eq .value { color: var(--emerald); }
+  .card.neq .value { color: var(--rose); }
+
+  .chart-wrap {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .chart-empty {
+    padding: 40px 20px;
+    color: var(--text);
+    font-size: 14px;
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  .table-wrap {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 6px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dark);
+    border-bottom: 2px solid rgba(66,66,66,0.12);
+    font-weight: 700;
+  }
+  tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(66,66,66,0.07);
+    color: var(--text);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,238,88,0.08); }
+  td.num, th.num {
+    font-family: 'JetBrains Mono', monospace;
+    text-align: right;
+  }
+  .empty-row td {
+    text-align: center;
+    font-style: italic;
+    opacity: 0.65;
+    padding: 24px 16px;
+  }
+
+  .obs {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 22px 24px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+  }
+  .obs p { margin: 0 0 10px 0; }
+  .obs p:last-child { margin-bottom: 0; }
+  .alert {
+    display: flex; gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(253, 216, 53, 0.18);
+    border: 1px solid rgba(253, 216, 53, 0.45);
+    margin-top: 12px;
+    font-size: 14px;
+  }
+  .alert-icon { font-size: 18px; line-height: 1; }
+
+  .footer {
+    margin-top: 56px;
+    padding: 22px 16px 0;
+    border-top: 1px solid rgba(66,66,66,0.12);
+    text-align: center;
+    color: var(--text);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 640px) {
+    .header { flex-direction: column; align-items: flex-start; }
+    .card .value { font-size: 28px; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<!-- 1. Header -->
-<header>
-  <div class="logo">⚖️</div>
-  <div class="header-text">
-    <h1>Reporte semanal listas de elegibles</h1>
-    <div class="sub">Despacho EARM · CNSC · 2026-04-17</div>
-  </div>
-  <div class="status-pill"><span class="dot"></span>SIN PARES</div>
-</header>
-
-<!-- Alerta huérfanas (si aplica) -->
-
-    <div class="alert-box">
-      <div class="alert-icon">⚠️</div>
-      <div>
-        <strong>Bases 4.0 sin lista candidata:</strong> 365 de 365 empleos base no encontraron ninguna lista de elegibles con el mismo <em>(entidad, Nivel Jerárquico, Grado)</em>. No se procesaron pares semánticos esta semana. Revisar el insumo Drive la próxima ejecución.
+  <div class="wrap">
+    <header class="header">
+      <div class="logo-box">⚖️</div>
+      <div class="header-text">
+        <h1 class="app-name">Reporte Semanal Listas de Elegibles</h1>
+        <p class="app-date">2026-04-17 · America/Bogotá</p>
       </div>
-    </div>
+      <span class="status-pill"><span class="dot"></span> En línea</span>
+    </header>
 
-<!-- 2. Cards -->
-<div class="cards">
-  <div class="card">
-    <div class="card-label">Registros procesados</div>
-    <div class="card-value">398</div>
-    <div class="card-sub">365 vacantes + 33 listas</div>
-  </div>
-  <div class="card">
-    <div class="card-label">Equivalentes</div>
-    <div class="card-value green">0</div>
-    <div class="card-sub">0.0% del total</div>
-  </div>
-  <div class="card">
-    <div class="card-label">No equivalentes</div>
-    <div class="card-value red">0</div>
-    <div class="card-sub">100.0% del total</div>
-  </div>
-  <div class="card">
-    <div class="card-label">% Equivalencia</div>
-    <div class="card-value amber">0.0%</div>
-    <div class="card-sub">0 pares analizados</div>
-  </div>
-</div>
+    <section class="section">
+      <h2 class="section-title">Totales del procesamiento</h2>
+      <div class="stats">
+        <div class="card">
+          <p class="label">Registros analizados</p>
+          <p class="value">0</p>
+        </div>
+        <div class="card eq">
+          <p class="label">Equivalentes</p>
+          <p class="value">0</p>
+        </div>
+        <div class="card neq">
+          <p class="label">No equivalentes</p>
+          <p class="value">0</p>
+        </div>
+        <div class="card">
+          <p class="label">% equivalentes</p>
+          <p class="value">0.0%</p>
+        </div>
+      </div>
+    </section>
 
-<!-- 3. Gráfica -->
-<section>
-  <h2>Distribución de veredictos</h2>
-  <div class="glass-panel">
-    <div class="chart-wrap">
-      <canvas id="doughnut" width="300" height="300"></canvas>
-    </div>
+    <section class="section">
+      <h2 class="section-title">Distribución de veredictos</h2>
+      <div class="chart-wrap">
+        <div class="chart-empty">Sin pares analizados en esta ejecución. El gráfico se mostrará cuando existan coincidencias entre las bases 4.0 y las listas de elegibles por entidad, nivel jerárquico y grado.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Top 10 entidades</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Entidad</th>
+              <th class="num">Pares</th>
+              <th class="num">Equivalentes</th>
+              <th class="num">% equivalencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="empty-row"><td colspan="4">Sin pares para reportar en esta ejecución.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Distribución por nivel jerárquico</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nivel jerárquico</th>
+              <th class="num">Pares</th>
+              <th class="num">Equivalentes</th>
+              <th class="num">No equivalentes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="empty-row"><td colspan="4">Sin distribución disponible.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Observaciones y errores</h2>
+      <div class="obs">
+        <p>La rutina ejecutó correctamente el pipeline (código de salida 0) sobre el insumo descargado desde Google Drive. Se consolidaron <strong>398 registros</strong> en total: <strong>365 bases 4.0</strong> (vacantes definitivas) y <strong>33 listas de elegibles</strong>.</p>
+        <p>El agrupamiento por (entidad, nivel jerárquico, grado) arrojó <strong>365 grupos</strong> y <strong>0 pares</strong> para comparar semánticamente: las <strong>365 bases resultaron huérfanas</strong>, es decir, ninguna base 4.0 encontró una lista de elegibles con la misma combinación de entidad, nivel y grado.</p>
+        <p>Causa probable: las entidades presentes en la hoja LISTAS DE ELEGIBLES (p. ej. «ALCALDIA DE ORTEGA TOLIMA») no coinciden exactamente con las de la hoja VACANTES DEFINITIVAS (variaciones en tildes, guiones o espacios) o los niveles/grados no intersecan. Se recomienda revisar la normalización del campo <code>nombre_entidad</code> y/o ampliar el alcance del insumo.</p>
+        <div class="alert">
+          <span class="alert-icon">⚠️</span>
+          <div>
+            <strong>Alerta:</strong> 365 bases huérfanas sin lista candidata. No se generaron los archivos <code>resultados_2026-04-17.xlsx</code> ni <code>reporte_2026-04-17.pdf</code> porque el pipeline no tuvo pares semánticos que analizar.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Equivalencia Masiva v1.0 — Edwin Arturo Ruiz Moreno — Comisionado CNSC 2026
+    </footer>
   </div>
-</section>
-
-<!-- 4. Top entidades -->
-<section>
-  <h2>Top entidades por pares analizados</h2>
-  <div class="glass-panel">
-    <table>
-      <thead><tr><th>Entidad</th><th>Pares</th><th>Equivalentes</th><th>% Equivalencia</th></tr></thead>
-      <tbody><tr><td colspan='4' style='text-align:center;color:#9E9E9E;padding:16px'>Sin pares analizados — todas las bases son huérfanas</td></tr></tbody>
-    </table>
-  </div>
-</section>
-
-<!-- 5. Distribución nivel -->
-<section>
-  <h2>Distribución por nivel jerárquico</h2>
-  <div class="glass-panel">
-    <table>
-      <thead><tr><th>Nivel Jerárquico</th><th>Pares</th></tr></thead>
-      <tbody><tr><td colspan='2' style='text-align:center;color:#9E9E9E;padding:16px'>Sin distribución por nivel</td></tr></tbody>
-    </table>
-  </div>
-</section>
-
-<!-- 6. Observaciones -->
-<section>
-  <h2>Observaciones y alertas</h2>
-  <div class="glass-panel">
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
-      <li style="font-size:.88rem;padding-left:20px;position:relative;line-height:1.6">
-        <span style="position:absolute;left:0;color:#FDD835;font-weight:700">→</span>
-        Bases huérfanas (sin lista candidata del mismo nivel/grado): <strong>365</strong> de 365.
-      </li>
-      <li style="font-size:.88rem;padding-left:20px;position:relative;line-height:1.6">
-        <span style="position:absolute;left:0;color:#FDD835;font-weight:700">→</span>
-        Único cruce posible de entidad: <em>ALCALDÍA DE ALVARADO - TOLIMA</em> — base Asistencial/Grado 3 vs listas Profesional/Técnico. Sin coincidencia de nivel.
-      </li>
-      <li style="font-size:.88rem;padding-left:20px;position:relative;line-height:1.6">
-        <span style="position:absolute;left:0;color:#FDD835;font-weight:700">→</span>
-        Acción recomendada: verificar que la hoja VACANTES DEFINITIVAS incluya filas para las 11 entidades que sí tienen listas (SECRETARÍA DE EDUCACIÓN DEPARTAMENTO DE TOLIMA, ALCALDIA DE ORTEGA TOLIMA, INDEPORTES TOLIMA, entre otras).
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>Equivalencia Masiva v1.0 — Edwin Arturo Ruiz Moreno — Comisionado CNSC 2026</footer>
-</div>
-
-<script>
-const equiv = 0;
-const noEquiv = 0;
-const hasData = (equiv + noEquiv) > 0;
-new Chart(document.getElementById('doughnut'), {
-  type: 'doughnut',
-  data: {
-    labels: hasData ? ['Equivalentes','No Equivalentes'] : ['Sin pares analizados'],
-    datasets: [{
-      data: hasData ? [equiv, noEquiv] : [1],
-      backgroundColor: hasData ? ['#16A34A','#EF4444'] : ['#E5E7EB'],
-      borderWidth: 0,
-      hoverOffset: 6
-    }]
-  },
-  options: {
-    cutout: '70%',
-    plugins: {
-      legend: {position:'bottom',labels:{font:{family:"'Plus Jakarta Sans',sans-serif",size:13},padding:16}},
-      tooltip: {callbacks:{label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + (hasData?' (' + Math.round(ctx.parsed/(equiv+noEquiv)*100)+'%)':'')}}
-    }
-  }
-});
-</script>
 </body>
 </html>
